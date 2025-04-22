@@ -23,6 +23,7 @@ const gameBoard =
 }
 const controller = {
     checkWinner: () => {
+        let tie = true;
         if (gameBoard.array[0] == gameBoard.array[1] && gameBoard.array[1] == gameBoard.array[2])
         {
             return gameBoard.array[0]
@@ -54,6 +55,14 @@ const controller = {
         if (gameBoard.array[2] == gameBoard.array[4] && gameBoard.array[4] == gameBoard.array[6])
         {
             return gameBoard.array[2]
+        }
+        for (let i = 0; i < gameBoard.array.length; i++) {
+            if (gameBoard.array[i] != 'X' && gameBoard.array[i] != 'O' ) {
+                tie = false
+            }
+        }
+        if (tie) {
+            return "Tie"
         }
         return 0
     }
@@ -102,8 +111,11 @@ const game = () => {
             if (controller.checkWinner() == 'X') {
                 console.log("player1 Wins")
             }
-            else {
+            else if (controller.checkWinner() == 'O'){
                 console.log("player2 Wins")
+            }
+            else {
+                console.log("TIE")
             }
         }
 
