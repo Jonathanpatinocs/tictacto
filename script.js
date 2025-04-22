@@ -68,9 +68,31 @@ const controller = {
     }
 }
 
+const doms = {
+    clickDivs: () => {
+        divs = document.querySelectorAll(".box")
+        divs.forEach(box => {
+            box.addEventListener('click', ()=> {
+                if (box.id != 'X' && box.id != 'O') {
+                    if (player1.isTurn) {
+                        box.innerText = "X"
+                        box.id = "X"
+                        console.log(box.id)
+                    }
+                    else if (player2.isTurn){
+                        box.innerText = "O"
+                        box.id = "O"
+                    }
+                }
+            })
+        });
+    }
+}
+
 const game = () => {
-    setTimeout(1000)
-    while(!gameBoard.win) {
+    doms.clickDivs()
+    
+    while(gameBoard.win) {
         console.log(gameBoard.array);
         if (player1.isTurn)
         {
