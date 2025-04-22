@@ -15,3 +15,17 @@ body {
 #gameboard > div {
     border: 1px solid black;
 }
+
+.box {
+    font-size: 75px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#X {
+    color: red;
+}
+#O {
+    color: blue;
+}

@@ -65,25 +65,55 @@ const controller = {
             return "Tie"
         }
         return 0
+    },
+    displayResults: (winner) => {
+        resultsText = document.getElementById('player')
+        resultsText.innerText = winner
     }
 }
 
 const doms = {
     clickDivs: () => {
+        
         divs = document.querySelectorAll(".box")
         divs.forEach(box => {
             box.addEventListener('click', ()=> {
-                if (box.id != 'X' && box.id != 'O') {
+                if (box.id != 'X' && box.id != 'O' && !box.classList.contains("Done")) {
                     if (player1.isTurn) {
                         box.innerText = "X"
+                        gameBoard.array[gameBoard.array.indexOf(box.id)] = player1.marker;
                         box.id = "X"
-                        console.log(box.id)
+                        player2.isTurn = true
+                        player1.isTurn = false
                     }
                     else if (player2.isTurn){
                         box.innerText = "O"
+                        gameBoard.array[gameBoard.array.indexOf(box.id)] = player2.marker;
                         box.id = "O"
+                        player2.isTurn = false
+                        player1.isTurn = true
                     }
                 }
+                if (controller.checkWinner() != 0)
+                    {
+                        gameBoard.win = true
+                        if (controller.checkWinner() == 'X') {
+                            console.log("player1 Wins")
+                            controller.displayResults("Player1 Wins")
+
+                        }
+                        else if (controller.checkWinner() == 'O'){
+                            console.log("player2 Wins")
+                            controller.displayResults("Player2 Wins")
+                        }
+                        else {
+                            console.log("TIE")
+                            controller.displayResults("TIE")
+                        }
+                        divs.forEach(box => {
+                            box.classList.add("Done")
+                        })
+                    }
             })
         });
     }
@@ -92,58 +122,7 @@ const doms = {
 const game = () => {
     doms.clickDivs()
     
-    while(gameBoard.win) {
-        console.log(gameBoard.array);
-        if (player1.isTurn)
-        {
-            let valid = false
-            while (!valid) {
-                let ans = prompt('player1: ')
-                if (gameBoard.array.includes(ans))
-                    {
-                        valid = true
-                        gameBoard.array[gameBoard.array.indexOf(ans)] = player1.marker;
-                        player1.isTurn = false
-                        player2.isTurn = true
-                    }
-                    else {
-                        console.log("invalid, Try Again")
-                }
-            }
-        }
-        else if (player2.isTurn) {
-            let valid = false
-            while (!valid) {
-                let ans = prompt('player2: ')
-                if (gameBoard.array.includes(ans))
-                    {
-                        valid = true
-                        gameBoard.array[gameBoard.array.indexOf(ans)] = player2.marker;
-                        player2.isTurn = false
-                        player1.isTurn = true
-                    }
-                    else {
-                        console.log("invalid, Try Again")
-                }
-            }
-        }
-        if (controller.checkWinner() != 0)
-        {
-            gameBoard.win = true
-            if (controller.checkWinner() == 'X') {
-                console.log("player1 Wins")
-            }
-            else if (controller.checkWinner() == 'O'){
-                console.log("player2 Wins")
-            }
-            else {
-                console.log("TIE")
-            }
-        }
-
-        console.log(gameBoard.array);
-        
-    }
+    
 }
 game()
 
